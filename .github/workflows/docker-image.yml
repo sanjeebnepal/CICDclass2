@@ -20,4 +20,4 @@ jobs:
     - name: Run the dockerimage
       run: docker run --rm -d -p 3000:80 my-image-name:image1
     - name: Test the running server
-      run: curl -I http://localhost:3000
+      run: curl -v http://localhost:3000
