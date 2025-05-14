@@ -15,9 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag my-image-name:image1
 
     - name: Run the dockerimage
-      run: docker run --rm -d -p 3000:80 my-image-name:$(date +%s)
+      run: docker run --rm -d -p 3000:80 my-image-name:image1
     - name: Test the running server
       run: curl -I http://localhost:3000
