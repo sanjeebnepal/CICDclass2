@@ -1,1 +1,38 @@
+name: GitHub Actions Variable Scope Demo
+
+# Workflow trigger
+on:
+  push:
+    branches:
+      - main
+
+# Workflow-level variables
+env:
+  MY_WORKFLOW_VARIABLE: "This is a workflow-level variable."
+
+jobs:
+  demo-job:
+    name: Demonstrate Variable Scopes
+    runs-on: ubuntu-latest
+
+    # Job-level variables
+    env:
+      MY_JOB_VARIABLE: "This is a job-level variable."
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Print Workflow and Job Variables
+        run: |
+          echo "Workflow-level variable: $MY_WORKFLOW_VARIABLE"
+          echo "Job-level variable: $MY_JOB_VARIABLE"
+
+      - name: Print Step Variable
+        env:
+          MY_STEP_VARIABLE: "This is a step-level variable."
+        run: |
+          echo "Step-level variable: $MY_STEP_VARIABLE"
+          echo "Job-level still accessible: $MY_JOB_VARIABLE"
+          echo "Workflow-level still accessible: $MY_WORKFLOW_VARIABLE"
 
