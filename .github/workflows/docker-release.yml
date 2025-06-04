@@ -1,14 +1,11 @@
-name: Docker Image Release workflow
+name: Docker Image Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  workflow_dispatch:
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,16 +16,10 @@ jobs:
           name: docker-image
           path: image/
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release with image
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Docker image archive to release
-        uses: softprops/action-gh-release@v2
-        with:
+          tag_name: release-${{ github.run_number }}
           files: image/my-app.tar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
