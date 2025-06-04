@@ -1,8 +1,8 @@
-name: Docker Build and Artifact
+name: Docker Build and Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -27,3 +27,11 @@ jobs:
           name: docker-image
           path: my-app.tar
           retention-days: 30
+
+      - name: Create GitHub Release with Docker image
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: release-${{ github.run_number }}
+          files: my-app.tar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
